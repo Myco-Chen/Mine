@@ -1,6 +1,6 @@
 #1.A
 #2.B
-#3.
+#3.Hello
 import pgzrun
 import random
 pacman = Actor('向右的吃豆人')
