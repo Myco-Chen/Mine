@@ -21,3 +21,5 @@ while 1:
         sys.exit()
     else:
         pyzbarParseQRcode(filepath)
+
+#test
