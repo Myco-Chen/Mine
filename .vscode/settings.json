@@ -1,0 +1,14 @@
+{
+    "cmake.configureOnOpen": true,
+    "python.pythonPath": "C:\\Users\\myco\\AppData\\Local\\Programs\\Python\\Python38\\python.exe",
+    "cSpell.words": [
+        "Arial",
+        "Rcode",
+        "imread",
+        "myqr",
+        "pyzbar",
+        "qrcode",
+        "zxdata",
+        "zxing"
+    ]
+}
