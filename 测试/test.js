@@ -4,3 +4,4 @@ function test(){
         console.log("num = " + i);
     }
 }
+test()
