@@ -1,0 +1,201 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+
+</head>
+<body>
+    <article class="baidu_pl">
+                 <div id="article_content" class="article_content clearfix">
+            <link rel="stylesheet" href="https://csdnimg.cn/release/phoenix/template/css/ck_htmledit_views-963e387caa.css">
+                            <div id="content_views" class="markdown_views prism-atom-one-dark">
+                    <!-- flowchart 箭头图标 勿删 -->
+                    <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+                        <path stroke-linecap="round" d="M5,0 0,2.5 5,5z" id="raphael-marker-block" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path>
+                    </svg>
+                                            <h2><a id="_0"></a>前言：</h2>
+<p>收藏了多年的csdn免费文章，忽然收费或者突然被作者删除了怎么办？<br>
+</p><div class="toc"><h3>文章目录</h3><ul><ul><li><a href="#_0" rel="nofollow">前言：</a></li></ul><li><a href="#1__3" rel="nofollow">1. 工具</a></li><ul><li><a href="#11_5" rel="nofollow">1.1需要使用到的模块</a></li><li><a href="#12__8" rel="nofollow">1.2 需要安装的工具</a></li></ul><li><a href="#2__html_15" rel="nofollow">2.  获得文章内容的html（去除无关内容）</a></li><ul><li><a href="#21__17" rel="nofollow">2.1 打开浏览器右键检查进行分析</a></li><li><a href="#22__23" rel="nofollow">2.2 开始数据解析</a></li><li><a href="#23_html_43" rel="nofollow">2.3 组装html</a></li></ul><li><a href="#3_htmlpdf_87" rel="nofollow">3. 将获得的html转成pdf</a></li><ul><li><a href="#31__89" rel="nofollow">3.1 检查工具是否成功安装</a></li><li><a href="#32_pdfkit_92" rel="nofollow">3.2 使用pdfkit模块</a></li><ul><li><a href="#321__93" rel="nofollow">3.2.1 先进行简单的配置</a></li><li><a href="#322__100" rel="nofollow">3.2.2 开始转换</a></li></ul></ul><li><a href="#____116" rel="nofollow">==   大功完成了！==</a></li><li><a href="#_159" rel="nofollow">小福利</a></li></ul></div><p></p>
+<h1><a id="1__3"></a>1. 工具</h1>
+<h2><a id="11_5"></a>1.1需要使用到的模块</h2>
+<p>pdfkit，requests，parsel</p>
+<h2><a id="12__8"></a>1.2 需要安装的工具</h2>
+<p>wkhtmltox-0.12.5-1.msvc2015-win64.exe 工具<br>
+链接：https://pan.baidu.com/s/1e_0_4tpyxIU8lHqJF56BhA<br>
+提取码：2141<br>
+直接傻瓜式的默认安装即可</p>
+<h1><a id="2__html_15"></a>2.  获得文章内容的html（去除无关内容）</h1>
+<h2><a id="21__17"></a>2.1 打开浏览器右键检查进行分析</h2>
+<p><img src="https://img-blog.csdnimg.cn/20200815231221834.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0E3Mjg4NDg5NDQ=,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"></p>
+<p>通过简单的分析可以发现右边那箭头就是我们需要的内容，且都是与文章相关的，不相关的是没有的</p>
+<h2><a id="22__23"></a>2.2 开始数据解析</h2>
+<pre><code class="prism language-python"><span class="token keyword">import</span> requests
+<span class="token keyword">import</span> parsel
+url <span class="token operator">=</span> <span class="token string">'https://blog.csdn.net/A728848944/article/details/108026415'</span>
+headers <span class="token operator">=</span> <span class="token punctuation">{</span>
+    <span class="token string">'user-agent'</span> <span class="token punctuation">:</span> <span class="token string">'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.125 Safari/537.36'</span>
+<span class="token punctuation">}</span>
+response <span class="token operator">=</span> requests<span class="token punctuation">.</span>get<span class="token punctuation">(</span>url<span class="token operator">=</span>url<span class="token punctuation">,</span> headers<span class="token operator">=</span>headers<span class="token punctuation">)</span>
+html <span class="token operator">=</span> response<span class="token punctuation">.</span>text
+selector <span class="token operator">=</span> parsel<span class="token punctuation">.</span>Selector<span class="token punctuation">(</span>html<span class="token punctuation">)</span>
+title <span class="token operator">=</span> selector<span class="token punctuation">.</span>css<span class="token punctuation">(</span><span class="token string">'.title-article::text'</span><span class="token punctuation">)</span><span class="token punctuation">.</span>get<span class="token punctuation">(</span><span class="token punctuation">)</span>
+article <span class="token operator">=</span> selector<span class="token punctuation">.</span>css<span class="token punctuation">(</span><span class="token string">'article'</span><span class="token punctuation">)</span><span class="token punctuation">.</span>get<span class="token punctuation">(</span><span class="token punctuation">)</span>  <span class="token comment"># 提取标签为article 的内容</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>article<span class="token punctuation">)</span>
+</code></pre>
+<p>输出结果：<br>
+<img src="https://img-blog.csdnimg.cn/20200815231807596.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0E3Mjg4NDg5NDQ=,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"><br>
+与上面的相互观察可指定数据提取是对的</p>
+<h2><a id="23_html_43"></a>2.3 组装html</h2>
+<p>由于提取出来的html是不全的，所以需要补充<br>
+如下是一个标准的html结构</p>
+<pre><code class="prism language-xml"><span class="token doctype">&lt;!DOCTYPE html&gt;</span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>html</span><span class="token punctuation">&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>head</span><span class="token punctuation">&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>meta</span> <span class="token attr-name">charset</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>UTF-8<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>title</span><span class="token punctuation">&gt;</span></span>Document<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>title</span><span class="token punctuation">&gt;</span></span>
+
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>head</span><span class="token punctuation">&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>body</span><span class="token punctuation">&gt;</span></span>
+    相关内容
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>body</span><span class="token punctuation">&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>html</span><span class="token punctuation">&gt;</span></span>
+</code></pre>
+<p>开始拼接，并保存下来</p>
+<pre><code class="prism language-python">src_html <span class="token operator">=</span> <span class="token triple-quoted-string string">'''
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;title&gt;Document&lt;/title&gt;
+
+&lt;/head&gt;
+&lt;body&gt;
+    {content}
+&lt;/body&gt;
+&lt;/html&gt;
+'''</span>
+<span class="token keyword">with</span> <span class="token builtin">open</span><span class="token punctuation">(</span>title<span class="token operator">+</span><span class="token string">'.html'</span><span class="token punctuation">,</span> mode<span class="token operator">=</span><span class="token string">'w+'</span><span class="token punctuation">,</span> encoding<span class="token operator">=</span><span class="token string">'utf-8'</span><span class="token punctuation">)</span> <span class="token keyword">as</span> f<span class="token punctuation">:</span>
+    f<span class="token punctuation">.</span>write<span class="token punctuation">(</span>src_html<span class="token punctuation">.</span><span class="token builtin">format</span><span class="token punctuation">(</span>content<span class="token operator">=</span>article<span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token keyword">print</span><span class="token punctuation">(</span>title<span class="token operator">+</span><span class="token string">'================保存成功'</span><span class="token punctuation">)</span>
+</code></pre>
+<p>输出结果：<br>
+<img src="https://img-blog.csdnimg.cn/20200815232356302.png#pic_center" alt="在这里插入图片描述"><br>
+看保存出来的html<br>
+<img src="https://img-blog.csdnimg.cn/20200815232601819.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0E3Mjg4NDg5NDQ=,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"><br>
+是不是相当简洁，没有任何多余的</p>
+<h1><a id="3_htmlpdf_87"></a>3. 将获得的html转成pdf</h1>
+<h2><a id="31__89"></a>3.1 检查工具是否成功安装</h2>
+<p>成功可以在下图找到相关包如下图所示（默认安装地址都是一样的）<br>
+<img src="https://img-blog.csdnimg.cn/20200815233019581.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0E3Mjg4NDg5NDQ=,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"></p>
+<h2><a id="32_pdfkit_92"></a>3.2 使用pdfkit模块</h2>
+<h3><a id="321__93"></a>3.2.1 先进行简单的配置</h3>
+<pre><code class="prism language-python">config <span class="token operator">=</span> pdfkit<span class="token punctuation">.</span>configuration<span class="token punctuation">(</span>wkhtmltopdf<span class="token operator">=</span>r<span class="token string">'C:\Program Files\wkhtmltopdf\bin\wkhtmltopdf.exe'</span><span class="token punctuation">)</span>
+</code></pre>
+<p>这就是上面路径下bin的wkhtmltopdf.exe一个软件</p>
+<h3><a id="322__100"></a>3.2.2 开始转换</h3>
+<pre><code class="prism language-python">pdfkit<span class="token punctuation">.</span>from_file<span class="token punctuation">(</span>title<span class="token operator">+</span><span class="token string">'.html'</span><span class="token punctuation">,</span> title<span class="token operator">+</span><span class="token string">'.pdf'</span><span class="token punctuation">,</span> configuration<span class="token operator">=</span>config<span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>title<span class="token operator">+</span><span class="token string">'.pdf'</span><span class="token punctuation">,</span><span class="token string">'已保存成功'</span><span class="token punctuation">)</span>
+</code></pre>
+<p>输出如下：</p>
+<p><img src="https://img-blog.csdnimg.cn/20200815233606530.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0E3Mjg4NDg5NDQ=,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"><br>
+观察是否成功打印 如下图所示：</p>
+<p><img src="https://img-blog.csdnimg.cn/20200815233740664.png#pic_center" alt="在这里插入图片描述"><br>
+观察是否可用：</p>
+<p><img src="https://img-blog.csdnimg.cn/20200815233757261.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0E3Mjg4NDg5NDQ=,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"></p>
+<h1><a id="____116"></a>==   大功完成了！==</h1>
+<p>最后当然是全部代码拉</p>
+<pre><code class="prism language-python"><span class="token keyword">import</span> pdfkit
+<span class="token keyword">import</span> requests
+<span class="token keyword">import</span> parsel
+url <span class="token operator">=</span> <span class="token string">'https://blog.csdn.net/A728848944/article/details/108026415'</span>
+headers <span class="token operator">=</span> <span class="token punctuation">{</span>
+    <span class="token string">'user-agent'</span> <span class="token punctuation">:</span> <span class="token string">'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.125 Safari/537.36'</span>
+<span class="token punctuation">}</span>
+response <span class="token operator">=</span> requests<span class="token punctuation">.</span>get<span class="token punctuation">(</span>url<span class="token operator">=</span>url<span class="token punctuation">,</span> headers<span class="token operator">=</span>headers<span class="token punctuation">)</span>
+html <span class="token operator">=</span> response<span class="token punctuation">.</span>text
+selector <span class="token operator">=</span> parsel<span class="token punctuation">.</span>Selector<span class="token punctuation">(</span>html<span class="token punctuation">)</span>
+title <span class="token operator">=</span> selector<span class="token punctuation">.</span>css<span class="token punctuation">(</span><span class="token string">'.title-article::text'</span><span class="token punctuation">)</span><span class="token punctuation">.</span>get<span class="token punctuation">(</span><span class="token punctuation">)</span>
+article <span class="token operator">=</span> selector<span class="token punctuation">.</span>css<span class="token punctuation">(</span><span class="token string">'article'</span><span class="token punctuation">)</span><span class="token punctuation">.</span>get<span class="token punctuation">(</span><span class="token punctuation">)</span>  <span class="token comment"># 提取标签为article 的内容</span>
+
+src_html <span class="token operator">=</span> <span class="token triple-quoted-string string">'''
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;title&gt;Document&lt;/title&gt;
+
+&lt;/head&gt;
+&lt;body&gt;
+    {content}
+&lt;/body&gt;
+&lt;/html&gt;
+'''</span>
+<span class="token keyword">with</span> <span class="token builtin">open</span><span class="token punctuation">(</span>title<span class="token operator">+</span><span class="token string">'.html'</span><span class="token punctuation">,</span> mode<span class="token operator">=</span><span class="token string">'w+'</span><span class="token punctuation">,</span> encoding<span class="token operator">=</span><span class="token string">'utf-8'</span><span class="token punctuation">)</span> <span class="token keyword">as</span> f<span class="token punctuation">:</span>
+    f<span class="token punctuation">.</span>write<span class="token punctuation">(</span>src_html<span class="token punctuation">.</span><span class="token builtin">format</span><span class="token punctuation">(</span>content<span class="token operator">=</span>article<span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token keyword">print</span><span class="token punctuation">(</span>title<span class="token operator">+</span><span class="token string">'================保存成功'</span><span class="token punctuation">)</span>
+
+config <span class="token operator">=</span> pdfkit<span class="token punctuation">.</span>configuration<span class="token punctuation">(</span>wkhtmltopdf<span class="token operator">=</span>r<span class="token string">'C:\Program Files\wkhtmltopdf\bin\wkhtmltopdf.exe'</span><span class="token punctuation">)</span>
+pdfkit<span class="token punctuation">.</span>from_file<span class="token punctuation">(</span>title<span class="token operator">+</span><span class="token string">'.html'</span><span class="token punctuation">,</span> title<span class="token operator">+</span><span class="token string">'.pdf'</span><span class="token punctuation">,</span> configuration<span class="token operator">=</span>config<span class="token punctuation">)</span>
+
+<span class="token keyword">print</span><span class="token punctuation">(</span>title<span class="token operator">+</span><span class="token string">'.pdf'</span><span class="token punctuation">,</span><span class="token string">'已保存成功'</span><span class="token punctuation">)</span>
+</code></pre>
+<h1><a id="_159"></a>小福利</h1>
+<p>获取一个博主所有文章pdf代码</p>
+<pre><code class="prism language-python"><span class="token keyword">import</span> pdfkit
+<span class="token keyword">import</span> requests
+<span class="token keyword">import</span> parsel
+<span class="token keyword">import</span> os
+<span class="token keyword">import</span> time
+
+
+src_html <span class="token operator">=</span> <span class="token triple-quoted-string string">'''
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;title&gt;Document&lt;/title&gt;
+
+&lt;/head&gt;
+&lt;body&gt;
+    {content}
+&lt;/body&gt;
+&lt;/html&gt;
+'''</span>
+headers <span class="token operator">=</span> <span class="token punctuation">{</span>
+    <span class="token string">'user-agent'</span> <span class="token punctuation">:</span> <span class="token string">'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.125 Safari/537.36'</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">def</span> <span class="token function">download_one_page</span><span class="token punctuation">(</span>page_url<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    response <span class="token operator">=</span> requests<span class="token punctuation">.</span>get<span class="token punctuation">(</span>url<span class="token operator">=</span>page_url<span class="token punctuation">,</span> headers<span class="token operator">=</span>headers<span class="token punctuation">)</span>
+    html <span class="token operator">=</span> response<span class="token punctuation">.</span>text
+    selector <span class="token operator">=</span> parsel<span class="token punctuation">.</span>Selector<span class="token punctuation">(</span>html<span class="token punctuation">)</span>
+    title <span class="token operator">=</span> selector<span class="token punctuation">.</span>css<span class="token punctuation">(</span><span class="token string">'.title-article::text'</span><span class="token punctuation">)</span><span class="token punctuation">.</span>get<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    article <span class="token operator">=</span> selector<span class="token punctuation">.</span>css<span class="token punctuation">(</span><span class="token string">'article'</span><span class="token punctuation">)</span><span class="token punctuation">.</span>get<span class="token punctuation">(</span><span class="token punctuation">)</span>  <span class="token comment"># 提取标签为article 的内容</span>
+
+    <span class="token keyword">with</span> <span class="token builtin">open</span><span class="token punctuation">(</span>title<span class="token operator">+</span><span class="token string">'.html'</span><span class="token punctuation">,</span> mode<span class="token operator">=</span><span class="token string">'w+'</span><span class="token punctuation">,</span> encoding<span class="token operator">=</span><span class="token string">'utf-8'</span><span class="token punctuation">)</span> <span class="token keyword">as</span> f<span class="token punctuation">:</span>
+        f<span class="token punctuation">.</span>write<span class="token punctuation">(</span>src_html<span class="token punctuation">.</span><span class="token builtin">format</span><span class="token punctuation">(</span>content<span class="token operator">=</span>article<span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+    config <span class="token operator">=</span> pdfkit<span class="token punctuation">.</span>configuration<span class="token punctuation">(</span>wkhtmltopdf<span class="token operator">=</span>r<span class="token string">'C:\Program Files\wkhtmltopdf\bin\wkhtmltopdf.exe'</span><span class="token punctuation">)</span>
+    pdfkit<span class="token punctuation">.</span>from_file<span class="token punctuation">(</span>title<span class="token operator">+</span><span class="token string">'.html'</span><span class="token punctuation">,</span> title<span class="token operator">+</span><span class="token string">'.pdf'</span><span class="token punctuation">,</span> configuration<span class="token operator">=</span>config<span class="token punctuation">)</span>
+    <span class="token keyword">print</span><span class="token punctuation">(</span>title<span class="token operator">+</span><span class="token string">'.pdf'</span><span class="token punctuation">,</span><span class="token string">'=================已保存成功'</span><span class="token punctuation">)</span>
+
+<span class="token keyword">def</span> <span class="token function">down_all_url</span><span class="token punctuation">(</span>index_url<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    index_response <span class="token operator">=</span> requests<span class="token punctuation">.</span>get<span class="token punctuation">(</span>url<span class="token operator">=</span>index_url<span class="token punctuation">,</span>headers<span class="token operator">=</span>headers<span class="token punctuation">)</span>
+    index_selector <span class="token operator">=</span> parsel<span class="token punctuation">.</span>Selector<span class="token punctuation">(</span>index_response<span class="token punctuation">.</span>text<span class="token punctuation">)</span>
+    urls <span class="token operator">=</span> index_selector<span class="token punctuation">.</span>css<span class="token punctuation">(</span><span class="token string">'.article-list h4 a::attr(href)'</span><span class="token punctuation">)</span><span class="token punctuation">.</span>getall<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token keyword">for</span> url <span class="token keyword">in</span> urls<span class="token punctuation">:</span>
+        download_one_page<span class="token punctuation">(</span>url<span class="token punctuation">)</span>
+        time<span class="token punctuation">.</span>sleep<span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span>
+
+<span class="token keyword">if</span> __name__ <span class="token operator">==</span> <span class="token string">'__main__'</span><span class="token punctuation">:</span>
+    down_all_url<span class="token punctuation">(</span><span class="token string">'https://blog.csdn.net/A728848944'</span><span class="token punctuation">)</span>
+</code></pre>
+
+                                    </div>
+                <link href="https://csdnimg.cn/release/phoenix/mdeditor/markdown_views-ff98e99283.css" rel="stylesheet">
+                                </div>
+            </article>
+</body>
+</html>
