@@ -10,14 +10,17 @@
     <facet type="Python" name="Python facet">
       <configuration sdkName="Python 3.8 (Mine)" />
     </facet>
+    <facet type="Python" name="Python facet">
+      <configuration sdkName="Python 3.8 (Mine)" />
+    </facet>
+    <facet type="Python" name="Python facet">
+      <configuration sdkName="Python 3.8 (Mine)" />
+    </facet>
   </component>
   <component name="NewModuleRootManager">
     <content url="file://$MODULE_DIR$" />
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="Python 3.8 (Mine) interpreter library" level="application" />
-  </component>
-  <component name="TestRunnerService">
-    <option name="PROJECT_TEST_RUNNER" value="Unittests" />
   </component>
 </module>
