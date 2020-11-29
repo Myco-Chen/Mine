@@ -16,6 +16,12 @@
     <facet type="Python" name="Python facet">
       <configuration sdkName="Python 3.8 (Mine)" />
     </facet>
+    <facet type="Python" name="Python facet">
+      <configuration sdkName="Python 3.8 (Mine)" />
+    </facet>
+    <facet type="Python" name="Python facet">
+      <configuration sdkName="Python 3.8 (Mine)" />
+    </facet>
   </component>
   <component name="NewModuleRootManager">
     <content url="file://$MODULE_DIR$" />
