@@ -6,7 +6,7 @@
                 "_DEBUG",
                 "UNICODE"
             ],
-            "compilerPath": "C:\\Program Files (x86)\\Dev-Cpp\\MinGW64\\bin\\g++.exe",
+            "compilerPath": "H:\\Myco\\AppData\\Local\\Programs\\Cygwin\\bin\\g++.exe",
             "intelliSenseMode": "gcc-x64",
             "browse": {
                 "path": [
@@ -14,7 +14,8 @@
                 ],
                 "limitSymbolsToIncludedHeaders": true,
                 "databaseFilename": ""
-            }
+            },
+            "cppStandard": "c++14"
         }
     ],
     "version": 4
