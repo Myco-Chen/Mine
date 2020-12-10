@@ -1,21 +1,19 @@
 {
     "configurations": [
         {
-            "name": "Win32",
+            "name": "Cygwin",
+            "includePath": [
+                "${workspaceFolder}/**"
+            ],
             "defines": [
                 "_DEBUG",
-                "UNICODE"
+                "UNICODE",
+                "_UNICODE"
             ],
-            "compilerPath": "H:\\Myco\\AppData\\Local\\Programs\\Cygwin\\bin\\g++.exe",
-            "intelliSenseMode": "gcc-x64",
-            "browse": {
-                "path": [
-                    "${workspaceFolder}"
-                ],
-                "limitSymbolsToIncludedHeaders": true,
-                "databaseFilename": ""
-            },
-            "cppStandard": "c++14"
+            "compilerPath": "H:\\Myco\\AppData\\Local\\Programs\\Cygwin\\bin\\gcc.exe",
+            "cStandard": "c17",
+            "cppStandard": "c++11",
+            "intelliSenseMode": "gcc-x64"
         }
     ],
     "version": 4
