@@ -9,7 +9,8 @@ class Game:
         self.tk.title("Mr.Stick Man Races for the Exit")
         self.tk.resizable(0, 0)
         self.tk.wm_attributes("-topmost", 1)
-        self.canvas = tkinter.Canvas(self.tk, width=500, height=500, highlightthickness=0)
+        self.canvas = tkinter.Canvas(
+            self.tk, width=500, height=500, highlightthickness=0)
         self.canvas.pack()
         self.tk.update()
         self.canvas_height = 500
@@ -19,10 +20,12 @@ class Game:
         h = self.bg.height()
         for x in range(0, 5):
             for y in range(0, 5):
-                self.canvas.create_image(x * w, y * h, image=self.bg, anchor='nw')
+                self.canvas.create_image(
+                    x * w, y * h, image=self.bg, anchor='nw')
         self.sprites = []
         self.running = True
-        self.game_over_text = self.canvas.create_text(250, 250, text='YOU WIN!', state='hidden', font=('仿宋', 100))
+        self.game_over_text = self.canvas.create_text(
+            250, 250, text='YOU WIN!', state='hidden', font=('仿宋', 100))
 
     def mainloop(self):
         while 1:
@@ -64,23 +67,20 @@ def within_y(co1, co2):
 
 
 def collided_left(co1, co2):
-    if within_y(co1, co2):
-        if co2.x2 >= co1.x1 >= co2.x1:
-            return True
+    if within_y(co1, co2) and co2.x2 >= co1.x1 >= co2.x1:
+        return True
     return False
 
 
 def collided_right(co1, co2):
-    if within_y(co1, co2):
-        if co2.x1 <= co1.x2 <= co2.x2:
-            return True
+    if within_y(co1, co2) and co2.x1 <= co1.x2 <= co2.x2:
+        return True
     return False
 
 
 def collided_top(co1, co2):
-    if within_x(co1, co2):
-        if co2.y2 >= co1.y1 >= co2.y1:
-            return True
+    if within_x(co1, co2) and co2.y2 >= co1.y1 >= co2.y1:
+        return True
     return False
 
 
@@ -109,7 +109,8 @@ class PlatformSprite(Sprite):
     def __init__(self, game, photo_image, x, y, width, height):
         Sprite.__init__(self, game)
         self.photo_image = photo_image
-        self.image = game.canvas.create_image(x, y, image=self.photo_image, anchor='nw')
+        self.image = game.canvas.create_image(
+            x, y, image=self.photo_image, anchor='nw')
         self.coordinates = Coords(x, y, x + width, y + height)
 
 
@@ -145,7 +146,8 @@ class DoorSprite(Sprite):
         Sprite.__init__(self, game)
         self.closed_door = tkinter.PhotoImage(file="door1.gif")
         self.open_door = tkinter.PhotoImage(file="door2.gif")
-        self.image = game.canvas.create_image(x, y, image=self.closed_door, anchor='nw')
+        self.image = game.canvas.create_image(
+            x, y, image=self.closed_door, anchor='nw')
         self.coordinates = Coords(x, y, x + (width / 2), y + height)
         self.endgame = True
 
@@ -171,7 +173,8 @@ class StickFigureSprite(Sprite):
             tkinter.PhotoImage(file="stick-R2.gif"),
             tkinter.PhotoImage(file="stick-R3.gif")
         ]
-        self.image = game.canvas.create_image(200, 470, image=self.images_left[0], anchor='nw')
+        self.image = game.canvas.create_image(
+            200, 470, image=self.images_left[0], anchor='nw')
         self.x = -2
         self.y = 0
         self.current_image = 0
@@ -207,14 +210,18 @@ class StickFigureSprite(Sprite):
                     self.current_image_add = 1
         if self.x < 0:
             if self.y != 0:
-                self.game.canvas.itemconfig(self.image, image=self.images_left[2])
+                self.game.canvas.itemconfig(
+                    self.image, image=self.images_left[2])
             else:
-                self.game.canvas.itemconfig(self.image, image=self.images_left[self.current_image])
+                self.game.canvas.itemconfig(
+                    self.image, image=self.images_left[self.current_image])
         elif self.x > 0:
             if self.y != 0:
-                self.game.canvas.itemconfig(self.image, image=self.images_right[2])
+                self.game.canvas.itemconfig(
+                    self.image, image=self.images_right[2])
             else:
-                self.game.canvas.itemconfig(self.image, image=self.images_right[self.current_image])
+                self.game.canvas.itemconfig(
+                    self.image, image=self.images_right[self.current_image])
 
     def coords(self):
         xy = self.game.canvas.coords(self.image)
@@ -289,16 +296,26 @@ class StickFigureSprite(Sprite):
 
 
 g = Game()
-platform1 = PlatformSprite(g, tkinter.PhotoImage(file="platform1.gif"), 0,480, 100, 10)
-platform2 = PlatformSprite(g, tkinter.PhotoImage(file="platform1.gif"), 150,440, 100, 10)
-platform3 = PlatformSprite(g, tkinter.PhotoImage(file="platform1.gif"), 300,400, 100, 10)
-platform4 = PlatformSprite(g, tkinter.PhotoImage(file="platform1.gif"), 300,160, 100, 10)
-platform5 = PlatformSprite(g, tkinter.PhotoImage(file="platform2.gif"),175, 350, 66, 10)
-platform6 = PlatformSprite(g, tkinter.PhotoImage(file="platform2.gif"), 50,300, 66, 10)
-platform7 = PlatformSprite(g, tkinter.PhotoImage(file="platform2.gif"), 170,120, 66, 10)
-platform8 = PlatformSprite(g, tkinter.PhotoImage(file="platform2.gif"), 45,60, 66, 10)
-platform9 = PlatformSprite(g, tkinter.PhotoImage(file="platform3.gif"),170, 250, 32, 10)
-platform10 = PlatformSprite(g, tkinter.PhotoImage(file="platform3.gif"), 230,200, 32, 10)
+platform1 = PlatformSprite(g, tkinter.PhotoImage(
+    file="platform1.gif"), 0, 480, 100, 10)
+platform2 = PlatformSprite(g, tkinter.PhotoImage(
+    file="platform1.gif"), 150, 440, 100, 10)
+platform3 = PlatformSprite(g, tkinter.PhotoImage(
+    file="platform1.gif"), 300, 400, 100, 10)
+platform4 = PlatformSprite(g, tkinter.PhotoImage(
+    file="platform1.gif"), 300, 160, 100, 10)
+platform5 = PlatformSprite(g, tkinter.PhotoImage(
+    file="platform2.gif"), 175, 350, 66, 10)
+platform6 = PlatformSprite(g, tkinter.PhotoImage(
+    file="platform2.gif"), 50, 300, 66, 10)
+platform7 = PlatformSprite(g, tkinter.PhotoImage(
+    file="platform2.gif"), 170, 120, 66, 10)
+platform8 = PlatformSprite(g, tkinter.PhotoImage(
+    file="platform2.gif"), 45, 60, 66, 10)
+platform9 = PlatformSprite(g, tkinter.PhotoImage(
+    file="platform3.gif"), 170, 250, 32, 10)
+platform10 = PlatformSprite(g, tkinter.PhotoImage(
+    file="platform3.gif"), 230, 200, 32, 10)
 g.sprites.append(platform1)
 g.sprites.append(platform2)
 g.sprites.append(platform3)
